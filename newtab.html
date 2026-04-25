@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <title>Life Dashboard</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
 
-    <h1 class="title">⏳ LIFE LEFT</h1>
+    <h1 class="title">LIFE LEFT</h1>
 
     <div class="timer" id="timer"></div>
 
@@ -17,7 +19,7 @@
     <p id="percent"></p>
 
     <div class="card">
-      <h3>💰 Financial Reality</h3>
+      <h3>Financial Reality</h3>
       <p id="financeOutput"></p>
       <div class="gap-bar">
         <div id="gapFill"></div>
@@ -25,17 +27,22 @@
     </div>
 
     <div class="card">
-      <h3>🎮 Your Level</h3>
+      <h3>Your Level</h3>
       <p id="level"></p>
     </div>
 
     <div class="card">
-      <h3>⚡ Reality Check</h3>
+      <h3>Reality Check</h3>
       <p id="insight"></p>
     </div>
 
     <div class="card">
-      <h3>⚙ Setup</h3>
+      <h3>Streak</h3>
+      <p id="streak"></p>
+    </div>
+
+    <div class="card">
+      <h3>Setup</h3>
       <input type="date" id="dob">
       <input type="number" id="lifespan" placeholder="Max lifespan (70)">
       <input type="number" id="goal" placeholder="Total Goal ₹">
@@ -44,6 +51,10 @@
     </div>
 
   </div>
+
+  <!-- Sounds -->
+  <audio id="clickSound" src="sounds/click.mp3"></audio>
+  <audio id="successSound" src="sounds/success.mp3"></audio>
 
   <script src="newtab.js"></script>
 </body>
