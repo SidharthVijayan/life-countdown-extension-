@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+
+    <h1 class="title">⏳ LIFE LEFT</h1>
+
+    <div class="timer" id="timer"></div>
+
+    <div class="progress-bar">
+      <div class="progress" id="lifeProgress"></div>
+    </div>
+
+    <p id="percent"></p>
+
+    <div class="card">
+      <h3>💰 Financial Reality</h3>
+      <p id="financeOutput"></p>
+      <div class="gap-bar">
+        <div id="gapFill"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎮 Your Level</h3>
+      <p id="level"></p>
+    </div>
+
+    <div class="card">
+      <h3>⚡ Reality Check</h3>
+      <p id="insight"></p>
+    </div>
+
+    <div class="card">
+      <h3>⚙ Setup</h3>
+      <input type="date" id="dob">
+      <input type="number" id="lifespan" placeholder="Max lifespan (70)">
+      <input type="number" id="goal" placeholder="Total Goal ₹">
+      <input type="number" id="income" placeholder="Monthly Income ₹">
+      <button onclick="saveAll()">Save</button>
+    </div>
+
+  </div>
+
+  <script src="newtab.js"></script>
+</body>
+</html>
