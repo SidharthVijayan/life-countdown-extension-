@@ -1,16 +1,40 @@
+// 🔊 SOUND
+function playSound(type) {
+  const sound = document.getElementById(type + "Sound");
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+}
+
+// 💾 SAVE + INSTANT REFRESH
 function saveAll() {
   const dob = document.getElementById("dob").value;
   let lifespan = parseInt(document.getElementById("lifespan").value);
   const goal = parseInt(document.getElementById("goal").value);
   const income = parseInt(document.getElementById("income").value);
 
+  if (!dob || !lifespan || !goal || !income) {
+    alert("Fill all fields bro 😄");
+    return;
+  }
+
   if (lifespan > 70) lifespan = 70;
 
-  chrome.storage.sync.set({ dob, lifespan, goal, income });
-  alert("Saved");
+  chrome.storage.sync.set({ dob, lifespan, goal, income }, () => {
+    document.getElementById("timer").innerText = "Updating...";
+    
+    calculateLife();
+    calculateFinance();
+    updateStreak();
+
+    playSound("success");
+
+    console.log("Saved + UI updated");
+  });
 }
 
-// LIFE TIMER
+// ⏳ LIFE TIMER
 function calculateLife() {
   chrome.storage.sync.get(["dob", "lifespan"], (data) => {
     if (!data.dob) return;
@@ -35,6 +59,8 @@ function calculateLife() {
     function tick() {
       remaining -= 1000;
 
+      if (remaining <= 0) return;
+
       const hrs = Math.floor(remaining / (1000 * 60 * 60));
       const mins = Math.floor((remaining / (1000 * 60)) % 60);
       const secs = Math.floor((remaining / 1000) % 60);
@@ -49,7 +75,7 @@ function calculateLife() {
   });
 }
 
-// FINANCE
+// 💰 FINANCE
 function calculateFinance() {
   chrome.storage.sync.get(["goal", "income", "dob", "lifespan"], (data) => {
     if (!data.goal || !data.income || !data.dob) return;
@@ -71,10 +97,17 @@ function calculateFinance() {
 
     generateInsight(gap, yearsLeft);
     addGamification(gap);
+
+    // 🔴 warning mode
+    if (gap < 0.5) {
+      document.body.classList.add("warning");
+    } else {
+      document.body.classList.remove("warning");
+    }
   });
 }
 
-// 🔥 HUMOR + MOTIVATION
+// 😄 HUMOR ENGINE
 function generateInsight(gap, yearsLeft) {
   let messages = [];
 
@@ -82,33 +115,33 @@ function generateInsight(gap, yearsLeft) {
     messages = [
       "🚨 Bro… even your future self is sweating.",
       "💀 This plan is vibes, not strategy.",
-      "😬 You’re not late… you’re pre-historic.",
+      "😬 You’re not late… you’re prehistoric.",
       "📉 Your money plan just ghosted reality.",
-      "🔥 Time to wake up before time runs out."
+      "🔥 Wake up before time runs out."
     ];
   } else if (gap < 0.7) {
     messages = [
-      "⚠️ Not bad… but not impressive either.",
+      "⚠️ Not bad… but not impressive.",
       "😅 You’re doing okay… ish.",
-      "📊 One push now = big payoff later.",
-      "🛠 Still fixable. Don’t procrastinate.",
+      "📊 One push now = big payoff.",
+      "🛠 Still fixable. Act now.",
       "⏳ You’re leaking time quietly."
     ];
   } else if (gap < 1) {
     messages = [
       "🙂 Close! Don’t choke now.",
       "💪 Almost there—stay sharp.",
-      "🚀 You’re warming up nicely.",
+      "🚀 You’re warming up.",
       "🎯 Lock in and finish strong.",
-      "📈 This is where winners push harder."
+      "📈 Winners push here."
     ];
   } else {
     messages = [
       "🔥 You’re dangerous now.",
       "💰 Future you says thank you.",
       "👑 Wealth mode unlocked.",
-      "🚀 Keep this pace and retire early.",
-      "🎮 You’re winning this level."
+      "🚀 Retire early at this pace.",
+      "🎮 You’re winning."
     ];
   }
 
@@ -128,7 +161,7 @@ function generateInsight(gap, yearsLeft) {
     msg + "\n\n⏳ " + yearsLeft + " years left.\n\n" + dailyMsg;
 }
 
-// 🎮 LEVEL SYSTEM
+// 🎮 LEVEL
 function addGamification(gap) {
   let level = "";
 
@@ -140,5 +173,40 @@ function addGamification(gap) {
   document.getElementById("level").innerText = level;
 }
 
-calculateLife();
-calculateFinance();
+// 🔥 STREAK
+function updateStreak() {
+  chrome.storage.sync.get(["lastVisit", "streak"], (data) => {
+    const today = new Date().toDateString();
+
+    let streak = data.streak || 0;
+
+    if (data.lastVisit === today) {
+      // no change
+    } else {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      if (data.lastVisit === yesterday.toDateString()) {
+        streak += 1;
+      } else {
+        streak = 1;
+      }
+    }
+
+    chrome.storage.sync.set({
+      lastVisit: today,
+      streak: streak
+    });
+
+    document.getElementById("streak").innerText =
+      `🔥 ${streak} day streak`;
+  });
+}
+
+// 🚀 INIT
+document.addEventListener("DOMContentLoaded", () => {
+  playSound("click");
+  calculateLife();
+  calculateFinance();
+  updateStreak();
+});
