@@ -1,138 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
-
 body {
   margin: 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: monospace;
   background: #0b0b0b;
   color: #e5e5e5;
   text-align: center;
 }
 
-/* Layout */
 .container {
   padding: 20px;
   max-width: 500px;
   margin: auto;
 }
 
-/* Title */
 .title {
   font-size: 12px;
-  letter-spacing: 3px;
   color: #777;
 }
 
-/* Timer */
 .timer {
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 28px;
   margin: 20px 0;
-  animation: pulse 1.5s infinite;
 }
 
-/* Progress Bar */
 .progress-bar {
   width: 100%;
-  height: 12px;
+  height: 10px;
   background: #222;
   border-radius: 10px;
-  overflow: hidden;
-  margin: 15px 0;
 }
 
 .progress {
   height: 100%;
   background: #00ff88;
-  width: 0%;
-  transition: width 1s ease-in-out;
 }
 
-/* Cards */
 .card {
   background: #111;
   padding: 15px;
-  margin-top: 20px;
-  border-radius: 12px;
+  margin-top: 15px;
+  border-radius: 10px;
   text-align: left;
-  animation: fadeIn 0.5s ease;
 }
 
-/* Headings */
-h3 {
-  color: #00ff88;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-/* Inputs */
 input {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   margin-top: 8px;
-  background: #0f0f0f;
+  background: #111;
   border: 1px solid #333;
-  border-radius: 6px;
   color: white;
 }
 
-/* Button */
 button {
   width: 100%;
-  padding: 12px;
-  margin-top: 12px;
+  padding: 10px;
+  margin-top: 10px;
   background: #00ff88;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-  transition: transform 0.1s ease;
-}
-
-button:hover {
-  transform: scale(1.03);
-}
-
-/* Small text */
-.small {
-  font-size: 12px;
-  color: #888;
-}
-
-/* Gap Bar */
-.gap-bar {
-  height: 10px;
-  background: #222;
-  border-radius: 10px;
-  margin-top: 10px;
 }
 
 #gapFill {
-  height: 100%;
-  width: 0%;
+  height: 10px;
   background: red;
-  border-radius: 10px;
-  transition: width 0.8s ease;
-}
-
-/* Warning mode */
-body.warning {
-  background: #140000;
-}
-
-/* Animations */
-@keyframes pulse {
-  0% { opacity: 0.85; }
-  50% { opacity: 1; }
-  100% { opacity: 0.85; }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
